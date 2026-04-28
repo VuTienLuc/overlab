@@ -51,7 +51,7 @@
                         <h3 class="font-bold text-indigo-700 mb-3 flex items-center border-b border-indigo-100 pb-2"><i class="fa-solid fa-laptop-code mr-2"></i> 4 Bước thao tác Trợ lý AI</h3>
                         <ol class="space-y-3 pl-2">
                             <li class="flex items-start"><span class="flex-shrink-0 flex items-center justify-center w-5 h-5 rounded-full bg-indigo-200 text-indigo-700 font-bold text-xs mr-3 mt-0.5">1</span> <div><strong class="text-slate-800">Chọn định dạng:</strong> Lựa chọn loại tài liệu (Đề thi, Slide...) và theme màu mong muốn.</div></li>
-                            <li class="flex items-start"><span class="flex-shrink-0 flex items-center justify-center w-5 h-5 rounded-full bg-indigo-200 text-indigo-700 font-bold text-xs mr-3 mt-0.5">2</span> <div><strong class="text-slate-800">Lên kịch bản:</strong> Thêm các dòng câu hỏi, chọn mức độ, hoặc <em>dán đề toán cũ</em> vào ô "Nội dung thô" nếu muốn AI chuyển nó thành Slide bài giảng.</div></li>
+                            <li class="flex items-start"><span class="flex-shrink-0 flex items-center justify-center w-5 h-5 rounded-full bg-indigo-200 text-indigo-700 font-bold text-xs mr-3 mt-0.5">2</span> <div><strong class="text-slate-800">Lên kịch bản:</strong> Dùng bảng cấu trúc chi tiết, hoặc dùng <em>Ma trận luyện thi tự động</em>, hoặc dán đề toán cũ vào.</div></li>
                             <li class="flex items-start"><span class="flex-shrink-0 flex items-center justify-center w-5 h-5 rounded-full bg-indigo-200 text-indigo-700 font-bold text-xs mr-3 mt-0.5">3</span> <div><strong class="text-slate-800">Lấy lệnh (Prompt):</strong> Bấm nút <span class="bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded text-xs font-semibold">Cập nhật Prompt</span> rồi nhấn <span class="bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded text-xs font-semibold">Sao chép</span>.</div></li>
                             <li class="flex items-start"><span class="flex-shrink-0 flex items-center justify-center w-5 h-5 rounded-full bg-indigo-200 text-indigo-700 font-bold text-xs mr-3 mt-0.5">4</span> <div><strong class="text-slate-800">Sinh mã LaTeX:</strong> Mở <a href="https://chatgpt.com" target="_blank" class="text-blue-600 hover:underline font-medium">ChatGPT</a>, <a href="https://claude.ai" target="_blank" class="text-blue-600 hover:underline font-medium">Claude</a> hoặc <a href="https://gemini.google.com" target="_blank" class="text-blue-600 hover:underline font-medium">Gemini</a>, dán đoạn lệnh vừa copy vào và chờ AI viết mã hoàn chỉnh.</div></li>
                         </ol>
@@ -128,7 +128,7 @@
 
                 <!-- CHỌN MẪU TRANG TRÍ -->
                 <div class="mb-5 mt-4 pt-4 border-t border-slate-100">
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Theme trang trí & Màu sắc (Mới):</label>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Theme trang trí & Màu sắc:</label>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <label class="flex items-center space-x-3 cursor-pointer p-3 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50/50 has-[:checked]:ring-1 has-[:checked]:ring-blue-600">
                             <input type="radio" name="themeColor" value="classic" checked class="w-4 h-4 text-blue-600 focus:ring-blue-600" onchange="generatePrompt()">
@@ -154,10 +154,31 @@
                     </div>
                 </div>
 
-                <!-- Bảng chọn cấu trúc (Động) -->
-                <div class="bg-blue-50/50 p-4 rounded-lg border border-blue-100 mb-4 mt-2">
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-slate-700 mb-1">Chủ đề bài học / Kỳ thi:</label>
+                    <input type="text" id="topic" placeholder="VD: Khảo sát hàm số, Thể tích khối đa diện, Thi Thử 2025..." 
+                           class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition font-medium" onchange="generatePrompt()" onkeyup="generatePrompt()">
+                </div>
+
+                <!-- CHỌN PHƯƠNG THỨC LÊN KỊCH BẢN (MỚI) -->
+                <div class="mb-4 mt-6 border-t border-slate-200 pt-5">
+                    <label class="block text-sm font-semibold text-slate-700 mb-3">Phương thức thiết kế kịch bản / Đề thi:</label>
+                    <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                        <label class="flex items-center space-x-2 cursor-pointer bg-slate-50 px-4 py-2 rounded-lg border border-slate-200 hover:bg-slate-100 transition-colors has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50">
+                            <input type="radio" name="scriptMode" value="detailed" checked class="w-4 h-4 text-primary focus:ring-primary" onchange="toggleScriptMode()">
+                            <span class="text-sm font-bold text-slate-700">Tùy chỉnh chi tiết (Từng dòng)</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer bg-emerald-50 px-4 py-2 rounded-lg border border-emerald-200 hover:bg-emerald-100 transition-colors has-[:checked]:border-emerald-600 has-[:checked]:bg-emerald-100/50">
+                            <input type="radio" name="scriptMode" value="matrix" class="w-4 h-4 text-emerald-600 focus:ring-emerald-600" onchange="toggleScriptMode()">
+                            <span class="text-sm font-bold text-emerald-800">Ma trận luyện thi tự động <span class="bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full ml-1 animate-pulse">HOT</span></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- CHẾ ĐỘ 1: BẢNG CHỌN CẤU TRÚC CHI TIẾT (CŨ) -->
+                <div id="detailedMode" class="bg-blue-50/50 p-4 rounded-lg border border-blue-100 mb-4 transition-all">
                     <div class="flex justify-between items-center mb-3">
-                        <h3 class="text-sm font-bold text-primary"><i class="fa-solid fa-sliders mr-2"></i>Nội dung các câu hỏi / slide cần có</h3>
+                        <h3 class="text-sm font-bold text-primary"><i class="fa-solid fa-sliders mr-2"></i>Nội dung từng câu hỏi / slide cần có</h3>
                         <button onclick="addRow()" class="text-xs bg-primary text-white px-3 py-1.5 rounded shadow-sm hover:bg-blue-700 transition shrink-0"><i class="fa-solid fa-plus mr-1"></i>Thêm dòng</button>
                     </div>
                     
@@ -176,15 +197,41 @@
                     </div>
                 </div>
 
-                <div class="mb-4">
-                    <label class="block text-sm font-semibold text-slate-700 mb-1">Chủ đề bài học (Kiến thức):</label>
-                    <input type="text" id="topic" placeholder="VD: Khảo sát hàm số, Thể tích khối đa diện..." 
-                           class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition" onchange="generatePrompt()" onkeyup="generatePrompt()">
+                <!-- CHẾ ĐỘ 2: MA TRẬN LUYỆN THI (MỚI) -->
+                <div id="matrixMode" class="hidden bg-gradient-to-br from-emerald-50 to-teal-50/50 p-5 rounded-lg border border-emerald-200 mb-4 shadow-inner transition-all">
+                    <h3 class="text-sm font-bold text-emerald-800 mb-4 border-b border-emerald-200 pb-2"><i class="fa-solid fa-bolt text-amber-500 mr-2"></i>Tạo nhanh theo Ma trận & Yêu cầu cần đạt</h3>
+                    
+                    <div class="mb-4">
+                        <label class="block text-xs font-bold text-emerald-700 mb-1">Yêu cầu cần đạt / Mục tiêu cụ thể:</label>
+                        <textarea id="learningObjectives" rows="2" placeholder="VD: Tìm m để hàm số đồng biến trên R, Nhận diện đồ thị hàm bậc 3..." 
+                                  class="w-full px-3 py-2 text-sm border border-emerald-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition bg-white shadow-sm" onchange="generatePrompt()" onkeyup="generatePrompt()"></textarea>
+                    </div>
+                    
+                    <label class="block text-xs font-bold text-emerald-700 mb-2">Phân bổ Thang điểm Bloom (Số lượng câu):</label>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div class="bg-white p-2 rounded-lg border border-emerald-100 shadow-sm text-center">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nhận biết</label>
+                            <input type="number" id="countNB" value="10" min="0" class="w-full text-center px-2 py-1.5 text-lg font-bold text-emerald-700 border-b-2 border-slate-200 focus:border-emerald-500 outline-none transition bg-transparent" onchange="generatePrompt()" onkeyup="generatePrompt()">
+                        </div>
+                        <div class="bg-white p-2 rounded-lg border border-emerald-100 shadow-sm text-center">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Thông hiểu</label>
+                            <input type="number" id="countTH" value="10" min="0" class="w-full text-center px-2 py-1.5 text-lg font-bold text-emerald-700 border-b-2 border-slate-200 focus:border-emerald-500 outline-none transition bg-transparent" onchange="generatePrompt()" onkeyup="generatePrompt()">
+                        </div>
+                        <div class="bg-white p-2 rounded-lg border border-emerald-100 shadow-sm text-center">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Vận dụng</label>
+                            <input type="number" id="countVD" value="5" min="0" class="w-full text-center px-2 py-1.5 text-lg font-bold text-amber-600 border-b-2 border-slate-200 focus:border-amber-500 outline-none transition bg-transparent" onchange="generatePrompt()" onkeyup="generatePrompt()">
+                        </div>
+                        <div class="bg-white p-2 rounded-lg border border-emerald-100 shadow-sm text-center">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Vận dụng cao</label>
+                            <input type="number" id="countVDC" value="3" min="0" class="w-full text-center px-2 py-1.5 text-lg font-bold text-red-600 border-b-2 border-slate-200 focus:border-red-500 outline-none transition bg-transparent" onchange="generatePrompt()" onkeyup="generatePrompt()">
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-emerald-600 mt-3 italic"><i class="fa-solid fa-circle-info mr-1"></i> Trợ lý AI sẽ tự động phân bổ ngẫu nhiên các câu hỏi này thành dạng Trắc nghiệm, Đúng/Sai, Trả lời ngắn... sao cho hợp lý nhất với Định dạng tài liệu bạn chọn.</p>
                 </div>
 
                 <div class="mb-4">
                     <label class="block text-sm font-semibold text-slate-700 mb-1">Nội dung thô (Đề bài, văn bản cần chuyển đổi - Tùy chọn):</label>
-                    <textarea id="rawContent" rows="5" placeholder="Dán nội dung các bài toán hoặc kịch bản giảng dạy vào đây..." 
+                    <textarea id="rawContent" rows="4" placeholder="Dán nội dung các bài toán hoặc kịch bản giảng dạy vào đây..." 
                               class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition resize-y" onchange="generatePrompt()" onkeyup="generatePrompt()"></textarea>
                 </div>
 
@@ -196,8 +243,8 @@
                     </label>
                 </div>
 
-                <button onclick="generatePrompt()" class="w-full bg-primary hover:bg-blue-800 text-white font-bold py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center">
-                    <i class="fa-solid fa-rotate-right mr-2"></i> Cập nhật Prompt
+                <button onclick="generatePrompt()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3.5 px-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-wand-magic-sparkles mr-2"></i> TẠO LỆNH (PROMPT) CHUẨN
                 </button>
             </div>
 
@@ -206,7 +253,7 @@
                 <div class="flex flex-wrap justify-between items-center mb-4 border-b pb-3 gap-3">
                     <h2 class="text-xl font-bold text-slate-800">2. Prompt dành cho AI</h2>
                     <div class="flex gap-2">
-                        <button onclick="copyPrompt()" class="bg-emerald-100 text-emerald-700 hover:bg-emerald-200 px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center shrink-0 shadow-sm">
+                        <button onclick="copyPrompt()" class="bg-emerald-100 text-emerald-800 hover:bg-emerald-200 px-4 py-2 rounded-lg text-sm font-bold transition flex items-center shrink-0 shadow-sm border border-emerald-200">
                             <i class="fa-regular fa-copy mr-2"></i> Sao chép Prompt
                         </button>
                         <a href="https://www.overleaf.com/project" target="_blank" rel="noopener noreferrer" class="bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center shrink-0 border border-blue-700">
@@ -215,18 +262,18 @@
                     </div>
                 </div>
                 
-                <p class="text-xs text-slate-500 mb-2"><i>* Hãy copy đoạn văn bản dưới đây và dán vào ChatGPT, Gemini, hoặc Claude.</i></p>
+                <p class="text-xs text-slate-500 mb-2"><i>* Hãy copy toàn bộ đoạn lệnh dưới đây và dán vào ChatGPT, Gemini, hoặc Claude.</i></p>
                 
                 <textarea id="outputPrompt" readonly 
-                          class="w-full flex-grow px-4 py-3 bg-slate-900 text-green-400 font-mono text-sm border border-slate-800 rounded-lg outline-none resize-none"></textarea>
+                          class="w-full flex-grow px-4 py-4 bg-[#0d1117] text-[#56d364] font-mono text-[13px] leading-relaxed border border-slate-800 rounded-lg outline-none resize-none shadow-inner custom-scrollbar"></textarea>
             </div>
 
         </div>
     </div>
 
     <!-- Thông báo Copy thành công -->
-    <div id="toast" class="fixed bottom-5 right-5 bg-slate-800 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300">
-        <i class="fa-solid fa-check-circle text-green-400 mr-2"></i> Đã sao chép Prompt vào Clipboard!
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-800 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+        <i class="fa-solid fa-check-circle text-green-400 mr-2"></i> Đã sao chép Prompt vào Clipboard! Sẵn sàng dán vào AI.
     </div>
 
     <script>
@@ -635,7 +682,23 @@ Hỏi khi chưa hiểu & $\\square$ Có & \\multicolumn{2}{c|}{$\\square$ Chưa}
             return latexStr;
         }
 
-        // Hàm thêm dòng cấu trúc
+        // Hàm chuyển đổi chế độ nhập liệu
+        function toggleScriptMode() {
+            const mode = document.querySelector('input[name="scriptMode"]:checked').value;
+            const detailedMode = document.getElementById('detailedMode');
+            const matrixMode = document.getElementById('matrixMode');
+            
+            if (mode === 'detailed') {
+                detailedMode.classList.remove('hidden');
+                matrixMode.classList.add('hidden');
+            } else {
+                detailedMode.classList.add('hidden');
+                matrixMode.classList.remove('hidden');
+            }
+            generatePrompt();
+        }
+
+        // Hàm thêm dòng cấu trúc (chế độ chi tiết)
         function addRow(content = '', type = 'Trắc nghiệm 4 đáp án', qty = 1, diff = 'Nhận biết') {
             const container = document.getElementById('structureRows');
             const row = document.createElement('div');
@@ -674,6 +737,8 @@ Hỏi khi chưa hiểu & $\\square$ Có & \\multicolumn{2}{c|}{$\\square$ Chưa}
         function generatePrompt() {
             const docType = document.querySelector('input[name="docType"]:checked').value;
             const themeColor = document.querySelector('input[name="themeColor"]:checked').value;
+            const scriptMode = document.querySelector('input[name="scriptMode"]:checked').value;
+            
             const topic = document.getElementById('topic').value.trim();
             const rawContentEl = document.getElementById('rawContent');
             const rawContent = rawContentEl.value.trim();
@@ -689,30 +754,38 @@ Hỏi khi chưa hiểu & $\\square$ Có & \\multicolumn{2}{c|}{$\\square$ Chưa}
                 rawContentEl.placeholder = "Dán nội dung các bài toán hoặc kịch bản giảng dạy vào đây (nếu có)...";
             }
 
-            // Thu thập các dòng cấu trúc
+            // Thu thập cấu trúc (Dựa vào chế độ)
             let structureStr = "";
-            let mcqCount = 0, tfCount = 0, saCount = 0, parallelCount = 0, slideCount = 0, essayCount = 0;
             
-            document.querySelectorAll('.structure-row').forEach((row) => {
-                const content = row.querySelector('.req-content').value.trim() || "Chung theo chủ đề";
-                const type = row.querySelector('.req-type').value;
-                const diff = row.querySelector('.req-diff').value;
-                const qty = parseInt(row.querySelector('.req-qty').value) || 1;
+            if (scriptMode === 'detailed') {
+                document.querySelectorAll('.structure-row').forEach((row) => {
+                    const content = row.querySelector('.req-content').value.trim() || "Chung theo chủ đề";
+                    const type = row.querySelector('.req-type').value;
+                    const diff = row.querySelector('.req-diff').value;
+                    const qty = parseInt(row.querySelector('.req-qty').value) || 1;
+                    structureStr += `- Tạo ${qty} [${type}] (Mức độ: ${diff}) về nội dung: ${content}\n`;
+                });
+            } else {
+                // Chế độ Ma trận luyện thi
+                const objectives = document.getElementById('learningObjectives').value.trim() || "Bám sát chủ đề yêu cầu";
+                const nb = document.getElementById('countNB').value || 0;
+                const th = document.getElementById('countTH').value || 0;
+                const vd = document.getElementById('countVD').value || 0;
+                const vdc = document.getElementById('countVDC').value || 0;
                 
-                if (type.includes('Trắc')) mcqCount += qty;
-                if (type.includes('Đúng')) tfCount += qty;
-                if (type.includes('ngắn')) saCount += qty;
-                if (type.includes('song song')) parallelCount += qty;
-                if (type.includes('Slide')) slideCount += qty;
-                if (type.includes('Tự luận')) essayCount += qty;
-
-                structureStr += `- Tạo ${qty} [${type}] (Mức độ: ${diff}) về nội dung: ${content}\n`;
-            });
+                structureStr += `- YÊU CẦU CẦN ĐẠT (MỤC TIÊU BÀI HỌC / KỲ THI):\n  + ${objectives}\n\n`;
+                structureStr += `- TỔNG SỐ CÂU HỎI VÀ MA TRẬN BLOOM (CHUYÊN LUYỆN THI):\n`;
+                structureStr += `  + Mức 1 (Nhận biết): ${nb} câu\n`;
+                structureStr += `  + Mức 2 (Thông hiểu): ${th} câu\n`;
+                structureStr += `  + Mức 3 (Vận dụng): ${vd} câu\n`;
+                structureStr += `  + Mức 4 (Vận dụng cao): ${vdc} câu\n`;
+                structureStr += `(Bạn hãy ĐÓNG VAI giáo viên luyện thi, TỰ ĐỘNG PHÂN BỔ ngẫu nhiên số lượng câu hỏi trên thành các dạng: Trắc nghiệm 4 đáp án, Trắc nghiệm Đúng/Sai, Trả lời ngắn, hoặc Tự luận sao cho phù hợp nhất với cấu trúc tài liệu).\n`;
+            }
 
             // Sinh Template động thay vì dùng template tĩnh (truyền thêm biến themeColor)
             const dynamicTemplate = getDynamicLaTeXTemplate(docType, topic, themeColor);
 
-            let promptStr = `Bạn là một chuyên gia LaTeX và là giáo viên môn Toán giỏi.\n\n`;
+            let promptStr = `Bạn là một chuyên gia LaTeX và là giáo viên môn Toán luyện thi cực giỏi.\n\n`;
             
             promptStr += `NHIỆM VỤ:\n`;
             
@@ -755,7 +828,6 @@ Hỏi khi chưa hiểu & $\\square$ Có & \\multicolumn{2}{c|}{$\\square$ Chưa}
                 
                 promptStr += `YÊU CẦU ĐẶC BIỆT DÀNH CHO PHIẾU HỌC TẬP (TIÊU CHUẨN SƯ PHẠM):\n`;
                 promptStr += `Một phiếu học tập hiệu quả không phải là "nhiều bài" mà là đúng cấu trúc, đúng mức độ, đúng mục tiêu phát triển năng lực. BẠN BẮT BUỘC PHẢI ĐIỀN NỘI DUNG THEO 6 BƯỚC ĐÃ ĐƯỢC CHUẨN BỊ SẴN TRONG TEMPLATE.\n`;
-                promptStr += `✅ Nguyên tắc: Từ dễ đến khó. 40% Nhận biết/Thông hiểu - 40% Vận dụng - 20% Vận dụng cao.\n\n`;
                 
             } else if (docType === 'parallel_worksheet') {
                 promptStr += `Hãy tạo một PHIẾU HỌC TẬP SONG SONG môn Toán bằng mã LaTeX hoàn chỉnh. Mã LaTeX này phải có thể biên dịch trực tiếp trên Overleaf mà không bị lỗi.\n\n`;
@@ -768,21 +840,23 @@ Hỏi khi chưa hiểu & $\\square$ Có & \\multicolumn{2}{c|}{$\\square$ Chưa}
                 promptStr += `- Để chia 2 cột an toàn trong LaTeX, BẮT BUỘC SỬ DỤNG cấu trúc minipage mẫu mà tôi đã comment sẵn trong Template bên dưới.\n\n`;
             } else {
                 promptStr += `Hãy tạo một ĐỀ KIỂM TRA Toán bằng mã LaTeX hoàn chỉnh. Mã LaTeX này phải có thể biên dịch trực tiếp trên Overleaf mà không bị lỗi.\n\n`;
-                promptStr += `YÊU CẦU CẤU TRÚC ĐỀ THI (Chuẩn 2025):\n`;
+                promptStr += `YÊU CẦU CẤU TRÚC ĐỀ THI (Chuẩn 2025 BGD):\n`;
             }
 
-            if (topic) promptStr += `- Chủ đề kiến thức tổng quát: ${topic}\n`;
-            promptStr += `- Mức độ chung của tài liệu: ${difficulty}\n`;
+            if (topic) promptStr += `- Chủ đề kiến thức tổng quát / Kỳ thi: ${topic}\n`;
+            if (scriptMode === 'detailed') promptStr += `- Mức độ chung của tài liệu: ${difficulty}\n`;
             
-            if (docType === 'worksheet' || docType === 'parallel_worksheet' || docType === 'presentation') {
-                promptStr += `- DANH SÁCH YÊU CẦU NỘI DUNG (SLIDE / BÀI TẬP):\n${structureStr}\n`;
-                promptStr += `(Dựa vào danh sách trên, hãy thiết kế nội dung điền vào Form).\n\n`;
-            } else if (docType === 'exam_mixed') {
-                promptStr += `- CHI TIẾT CÁC CÂU CẦN TẠO:\n${structureStr}\n`;
-                promptStr += `(Hãy tự động phân bổ các câu hỏi vào PHẦN I (Trắc nghiệm) và PHẦN II (Tự luận) tương ứng với loại câu hỏi trong Template).\n\n`;
-            } else {
-                promptStr += `- CHI TIẾT CÁC CÂU CẦN TẠO:\n${structureStr}\n`;
-                promptStr += `(Hãy tự động phân bổ vào Phần I, II, III tương ứng trong Template).\n\n`;
+            // XUẤT CẤU TRÚC/MA TRẬN
+            promptStr += `\nKỊCH BẢN NỘI DUNG YÊU CẦU:\n${structureStr}\n`;
+            
+            if (scriptMode === 'detailed') {
+                if (docType === 'worksheet' || docType === 'parallel_worksheet' || docType === 'presentation') {
+                    promptStr += `(Dựa vào danh sách trên, hãy thiết kế nội dung điền vào Form).\n\n`;
+                } else if (docType === 'exam_mixed') {
+                    promptStr += `(Hãy tự động phân bổ các câu hỏi vào PHẦN I (Trắc nghiệm) và PHẦN II (Tự luận) tương ứng với loại câu hỏi trong Template).\n\n`;
+                } else {
+                    promptStr += `(Hãy tự động phân bổ vào Phần I, II, III tương ứng trong Template).\n\n`;
+                }
             }
 
             if (rawContent) {
@@ -792,10 +866,10 @@ Hỏi khi chưa hiểu & $\\square$ Có & \\multicolumn{2}{c|}{$\\square$ Chưa}
                     promptStr += `NỘI DUNG THAM KHẢO (Sử dụng hoặc chuyển đổi văn bản sau nếu có):\n"""\n${rawContent}\n"""\n\n`;
                 }
             } else if (docType === 'convert_to_slide') {
-                promptStr += `[CHÚ Ý LỚN: NGƯỜI DÙNG QUÊN CUNG CẤP TÀI LIỆU GỐC. HÃY YÊU CẦU HỌ CUNG CẤP HOẶC TỰ TẠO RA CÁC VÍ DỤ MINH HỌA CHO CHỦ ĐỀ NÀY ĐỂ LÀM SLIDE]\n\n`;
+                promptStr += `\n[CHÚ Ý LỚN: NGƯỜI DÙNG QUÊN CUNG CẤP TÀI LIỆU GỐC. HÃY YÊU CẦU HỌ CUNG CẤP HOẶC TỰ TẠO RA CÁC VÍ DỤ MINH HỌA CHO CHỦ ĐỀ NÀY ĐỂ LÀM SLIDE]\n\n`;
             }
 
-            promptStr += `CÁC QUY TẮC BẮT BUỘC KHÔNG ĐƯỢC LÀM SAI:\n`;
+            promptStr += `\nCÁC QUY TẮC BẮT BUỘC KHÔNG ĐƯỢC LÀM SAI:\n`;
             promptStr += `1. KIẾN TRÚC KỸ THUẬT: Bạn BẮT BUỘC phải copy 100% cấu trúc của TEMPLATE MẪU mà tôi cung cấp ở dưới. KHÔNG ĐƯỢC THAY ĐỔI phần cài đặt gói (Preamble), KHÔNG ĐƯỢC thay đổi Header/Footer. Tôi đã cấu hình hoàn chỉnh cho bạn.\n`;
             
             let ruleCounter = 2;
