@@ -876,6 +876,10 @@ Hỏi khi chưa hiểu & $\\square$ Có & \\multicolumn{2}{c|}{$\\square$ Chưa}
             promptStr += `1. KIẾN TRÚC KỸ THUẬT: Bạn BẮT BUỘC phải copy 100% cấu trúc của TEMPLATE MẪU mà tôi cung cấp ở dưới. KHÔNG ĐƯỢC THAY ĐỔI phần cài đặt gói (Preamble), KHÔNG ĐƯỢC thay đổi Header/Footer. Tôi đã cấu hình hoàn chỉnh cho bạn.\n`;
             
             let ruleCounter = 2;
+            
+            promptStr += `${ruleCounter}. KÝ HIỆU VECTƠ: BẮT BUỘC sử dụng lệnh \\overrightarrow{} (ví dụ: \\overrightarrow{AB}, \\overrightarrow{u}) thay vì \\vec{} cho TẤT CẢ các ký hiệu vectơ để mũi tên hiển thị dài và đẹp.\n`;
+            ruleCounter++;
+
             if (optTikz) {
                 if(docType === 'presentation' || docType === 'convert_to_slide') {
                     promptStr += `${ruleCounter}. VẼ HÌNH TRONG BEAMER: Nếu slide có hình vẽ, BẮT BUỘC dùng môi trường \\begin{columns} (cột trái nội dung, cột phải chứa hình vẽ TikZ).\n`;
