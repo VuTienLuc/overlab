@@ -742,6 +742,7 @@ Hỏi khi chưa hiểu & $\\square$ Có & \\multicolumn{2}{c|}{$\\square$ Chưa}
 \\vspace{0.2cm}
 
 % [CHÈN CÁC CẶP BÀI SONG SONG VÀO ĐÂY THEO MẪU BÊN DƯỚI]
+% BỎ DẤU % ĐỂ DÙNG LỆNH MINIPAGE BÊN DƯỚI NÀY:
 % \\noindent
 % \\begin{minipage}[t]{0.48\\textwidth}
 %     \\textbf{\\textcolor{myblue}{Ví dụ 1:}} [Đề bài]\\\\
@@ -983,7 +984,7 @@ Hỏi khi chưa hiểu & $\\square$ Có & \\multicolumn{2}{c|}{$\\square$ Chưa}
                 promptStr += `- Thiết kế 2 cột: Cột trái là "Ví dụ mẫu" (có lời giải chi tiết, gợi ý tư duy). Cột phải là "Bài tương tự" (Cùng dạng 100% hoặc biến đổi rất nhẹ, KHÔNG CÓ LỜI GIẢI, để dòng chấm chấm \\dotfill cho học sinh tự làm).\n`;
                 promptStr += `- Đánh số cặp: Ví dụ 1 (Cột trái) - Bài tương tự 1 (Cột phải).\n`;
                 promptStr += `- Dưới mỗi cặp bài, BẮT BUỘC thêm dòng: "🔍 Nhận xét sau khi làm: \\dotfill".\n`;
-                promptStr += `- Để chia 2 cột an toàn trong LaTeX, BẮT BUỘC SỬ DỤNG cấu trúc minipage mẫu mà tôi đã comment sẵn trong Template bên dưới.\n\n`;
+                promptStr += `- Để chia 2 cột an toàn trong LaTeX, BẮT BUỘC BỎ DẤU % ở cấu trúc minipage mà tôi đã làm sẵn trong Template bên dưới.\n\n`;
             } else if (docType === 'quick_test') {
                 promptStr += `Hãy tạo một ĐỀ KIỂM TRA 15 PHÚT môn Toán bằng mã LaTeX hoàn chỉnh. Đề bài cần ngắn gọn, đánh giá nhanh gọn trọng tâm kiến thức.\n\n`;
             } else if (docType === 'self_study') {
@@ -1028,19 +1029,20 @@ Hỏi khi chưa hiểu & $\\square$ Có & \\multicolumn{2}{c|}{$\\square$ Chưa}
                 promptStr += `\n[CHÚ Ý LỚN: NGƯỜI DÙNG QUÊN CUNG CẤP TÀI LIỆU GỐC. HÃY YÊU CẦU HỌ CUNG CẤP HOẶC TỰ TẠO RA CÁC VÍ DỤ MINH HỌA CHO CHỦ ĐỀ NÀY ĐỂ LÀM SLIDE]\n\n`;
             }
 
-            promptStr += `\nCÁC QUY TẮC BẮT BUỘC KHÔNG ĐƯỢC LÀM SAI:\n`;
-            promptStr += `1. KIẾN TRÚC KỸ THUẬT: Bạn BẮT BUỘC phải copy 100% cấu trúc của TEMPLATE MẪU mà tôi cung cấp ở dưới. KHÔNG ĐƯỢC THAY ĐỔI phần cài đặt gói (Preamble), KHÔNG ĐƯỢC thay đổi Header/Footer. Tôi đã cấu hình hoàn chỉnh cho bạn.\n`;
+            promptStr += `\nCÁC QUY TẮC BẮT BUỘC ĐỂ CODE CHẠY 100% KHÔNG LỖI TRÊN OVERLEAF:\n`;
+            promptStr += `1. TEMPLATE GỐC: Bạn BẮT BUỘC phải copy 100% phần Preamble (khai báo gói) của TEMPLATE MẪU. TUYỆT ĐỐI KHÔNG thêm/bớt \\usepackage để tránh xung đột trên Overleaf.\n`;
+            promptStr += `2. CÚ PHÁP AN TOÀN & TOÁN HỌC: Mọi số liệu, biến số (x, y, m...), biểu thức trong văn bản BẮT BUỘC phải được đặt trong môi trường toán $...$. Đảm bảo đóng/mở ngoặc đầy đủ và escape các ký tự đặc biệt (ví dụ: \\%, \\&, \\#, \\_) nếu dùng trong văn bản thường.\n`;
             
-            let ruleCounter = 2;
+            let ruleCounter = 3;
             
-            promptStr += `${ruleCounter}. KÝ HIỆU VECTƠ: BẮT BUỘC sử dụng lệnh \\overrightarrow{} (ví dụ: \\overrightarrow{AB}, \\overrightarrow{u}) thay vì \\vec{} cho TẤT CẢ các ký hiệu vectơ để mũi tên hiển thị dài và đẹp.\n`;
+            promptStr += `${ruleCounter}. KÝ HIỆU VECTƠ: BẮT BUỘC sử dụng lệnh \\overrightarrow{} (ví dụ: \\overrightarrow{AB}, \\overrightarrow{u}) thay vì \\vec{} để tránh lỗi hiển thị.\n`;
             ruleCounter++;
 
             if (optTikz) {
                 if(docType === 'presentation' || docType === 'convert_to_slide') {
-                    promptStr += `${ruleCounter}. VẼ HÌNH TRONG BEAMER: Nếu slide có hình vẽ, BẮT BUỘC dùng môi trường \\begin{columns} (cột trái nội dung, cột phải chứa hình vẽ TikZ).\n`;
+                    promptStr += `${ruleCounter}. VẼ HÌNH TRONG BEAMER: Nếu slide có hình vẽ, BẮT BUỘC dùng môi trường \\begin{columns} (cột trái nội dung, cột phải chứa hình vẽ TikZ). Chỉ dùng các lệnh TikZ cơ bản, an toàn, không tự chế macro lạ.\n`;
                 } else {
-                    promptStr += `${ruleCounter}. VẼ HÌNH: Tài liệu PHẢI CÓ ÍT NHẤT 1 CÂU CÓ HÌNH VẼ (Bằng TikZ hoặc tkz-euclide). Nếu là đề thi/phiếu thường, hãy dùng minipage chia 2 cột (Cột chữ 0.65\\linewidth, cột hình 0.32\\linewidth, neo đỉnh \\vspace{0pt}). Nếu là phiếu song song, hãy khéo léo chèn hình vào trong cột tương ứng.\n`;
+                    promptStr += `${ruleCounter}. VẼ HÌNH: Tài liệu PHẢI CÓ ÍT NHẤT 1 CÂU CÓ HÌNH VẼ (Bằng TikZ hoặc tkz-euclide). Hãy dùng minipage chia 2 cột an toàn (Cột chữ 0.65\\linewidth, cột hình 0.32\\linewidth, neo đỉnh \\vspace{0pt}). Chỉ dùng các lệnh vẽ cơ bản để đảm bảo biên dịch được.\n`;
                 }
                 ruleCounter++;
             }
@@ -1059,7 +1061,7 @@ Hỏi khi chưa hiểu & $\\square$ Có & \\multicolumn{2}{c|}{$\\square$ Chưa}
             promptStr += `Bạn hãy điền nội dung toán học của mình vào thay thế các ghi chú % [...] trong template sau:\n\n`;
             promptStr += `\`\`\`latex\n${dynamicTemplate}\n\`\`\`\n\n`;
             
-            promptStr += `Hãy chỉ trả về duy nhất đoạn mã LaTeX, không giải thích gì thêm.`;
+            promptStr += `Hãy chỉ trả về duy nhất đoạn mã LaTeX, không giải thích gì thêm để tôi copy dán thẳng vào Overleaf (trình biên dịch pdfLaTeX).`;
 
             document.getElementById('outputPrompt').value = promptStr;
         }
