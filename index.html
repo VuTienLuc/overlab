@@ -80,7 +80,7 @@
                 <!-- CHỌN LOẠI TÀI LIỆU -->
                 <div class="mb-5">
                     <label class="block text-sm font-semibold text-slate-700 mb-2">Loại tài liệu cần tạo:</label>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                         <label class="flex items-center space-x-3 cursor-pointer p-3 border border-slate-200 rounded-lg hover:bg-blue-50 transition-colors has-[:checked]:border-primary has-[:checked]:bg-blue-50/50 has-[:checked]:ring-1 has-[:checked]:ring-primary">
                             <input type="radio" name="docType" value="exam" class="w-4 h-4 text-primary focus:ring-primary" onchange="generatePrompt()">
                             <div class="flex flex-col">
@@ -121,6 +121,28 @@
                             <div class="flex flex-col">
                                 <span class="font-bold text-amber-800 text-sm">Chuyển Slide</span>
                                 <span class="text-xs text-amber-600">Từ Đề/Phiếu</span>
+                            </div>
+                        </label>
+                        <!-- 3 LOẠI TÀI LIỆU MỚI THÊM -->
+                        <label class="flex items-center space-x-3 cursor-pointer p-3 border border-slate-200 rounded-lg hover:bg-emerald-50 transition-colors has-[:checked]:border-emerald-600 has-[:checked]:bg-emerald-50/50 has-[:checked]:ring-1 has-[:checked]:ring-emerald-600">
+                            <input type="radio" name="docType" value="self_study" class="w-4 h-4 text-emerald-600 focus:ring-emerald-600" onchange="generatePrompt()">
+                            <div class="flex flex-col">
+                                <span class="font-bold text-slate-800 text-sm">Phiếu Tự Học</span>
+                                <span class="text-xs text-slate-500">Đọc hiểu & Điền khuyết</span>
+                            </div>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-3 border border-slate-200 rounded-lg hover:bg-emerald-50 transition-colors has-[:checked]:border-emerald-600 has-[:checked]:bg-emerald-50/50 has-[:checked]:ring-1 has-[:checked]:ring-emerald-600">
+                            <input type="radio" name="docType" value="quick_test" class="w-4 h-4 text-emerald-600 focus:ring-emerald-600" onchange="generatePrompt()">
+                            <div class="flex flex-col">
+                                <span class="font-bold text-slate-800 text-sm">Mini Test 15p</span>
+                                <span class="text-xs text-slate-500">Kiểm tra nhanh</span>
+                            </div>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-3 border border-slate-200 rounded-lg hover:bg-emerald-50 transition-colors has-[:checked]:border-emerald-600 has-[:checked]:bg-emerald-50/50 has-[:checked]:ring-1 has-[:checked]:ring-emerald-600">
+                            <input type="radio" name="docType" value="review_sheet" class="w-4 h-4 text-emerald-600 focus:ring-emerald-600" onchange="generatePrompt()">
+                            <div class="flex flex-col">
+                                <span class="font-bold text-slate-800 text-sm">Phiếu Tổng Ôn</span>
+                                <span class="text-xs text-slate-500">Tóm tắt & Sơ đồ</span>
                             </div>
                         </label>
                     </div>
@@ -322,12 +344,12 @@
 ${colorConfig}
 \\setbeamertemplate{navigation symbols}{} % Tắt thanh điều hướng mặc định
 
-% --- CẤU HÌNH FOOTER (LỚP TOÁN THẦY VŨ TIẾN LỰC) ---
+% --- CẤU HÌNH FOOTER ---
 \\setbeamertemplate{footline}{
   \\leavevmode%
   \\hbox{%
   \\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
-    \\usebeamerfont{author in head/foot}Lớp Toán Thầy Vũ Tiến Lực - NHC
+    \\usebeamerfont{author in head/foot}THPT Nguyễn Hữu Cảnh
   \\end{beamercolorbox}%
   \\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
     \\usebeamerfont{title in head/foot}\\insertshorttitle
@@ -342,7 +364,7 @@ ${colorConfig}
 
 % --- SLIDE TIÊU ĐỀ ---
 \\title{\\textbf{\\MakeUppercase{${topicUpper}}}}
-\\author{\\textbf{Lớp Toán Thầy Vũ Tiến Lực - NHC}}
+\\author{\\textbf{Trường THPT Nguyễn Hữu Cảnh - Tổ Toán}}
 \\date{\\today}
 
 \\begin{frame}
@@ -388,13 +410,13 @@ ${colorConfig}
 
             // 2. CÁC TEMPLATE BẢN IN (DOCUMENTS)
             let footerConfig = '';
-            if(docType === 'exam' || docType === 'exam_mixed') {
+            if(docType === 'exam' || docType === 'exam_mixed' || docType === 'quick_test') {
                 footerConfig = `\\fancyfoot[L]{\\textcolor{myblue}{\\textit{Mã đề: 101}}}
 \\fancyfoot[C]{\\textcolor{black!70}{\\textit{Kỳ thi / Kiểm tra - Môn Toán}}}
 \\fancyfoot[R]{\\textcolor{myblue}{\\textbf{Trang \\thepage/\\pageref{LastPage}}}}`;
             } else {
-                footerConfig = `\\fancyfoot[L]{\\textcolor{myblue}{\\textit{Lớp Toán Thầy Vũ Tiến Lực - NHC}}}
-\\fancyfoot[C]{\\textcolor{black!70}{\\textit{Phiếu học tập}}}
+                footerConfig = `\\fancyfoot[L]{\\textcolor{myblue}{\\textit{THPT Nguyễn Hữu Cảnh - Tổ Toán}}}
+\\fancyfoot[C]{\\textcolor{black!70}{\\textit{Tài liệu học tập}}}
 \\fancyfoot[R]{\\textcolor{myblue}{\\textbf{Trang \\thepage/\\pageref{LastPage}}}}`;
             }
 
@@ -446,8 +468,8 @@ ${footerConfig}
 % ==========================================
 \\noindent
 \\begin{tabularx}{\\textwidth}{@{} c X c @{}}
-    \\textcolor{myblue}{\\textbf{SỞ GD\\&ĐT ...}} & & \\textcolor{myblue}{\\textbf{KỲ THI THỬ TỐT NGHIỆP THPT 2025}} \\\\
-    \\textcolor{myblue}{\\textbf{TRƯỜNG THPT ...}} & & \\textcolor{myblue}{\\textbf{Bài thi: TOÁN}} \\\\
+    \\textcolor{myblue}{\\textbf{SỞ GD\\&ĐT TP. HỒ CHÍ MINH}} & & \\textcolor{myblue}{\\textbf{KỲ THI THỬ TỐT NGHIỆP THPT 2025}} \\\\
+    \\textcolor{myblue}{\\textbf{TRƯỜNG THPT NGUYỄN HỮU CẢNH}} & & \\textcolor{myblue}{\\textbf{Bài thi: TOÁN}} \\\\
     \\cline{1-1} \\cline{3-3}
     \\textit{(Đề thi có \\pageref{LastPage} trang)} & & \\textit{Thời gian làm bài: 90 phút} \\\\
 \\end{tabularx}
@@ -486,7 +508,7 @@ ${footerConfig}
 % ==========================================
 \\noindent
 \\begin{tabularx}{\\textwidth}{@{} c X c @{}}
-    \\textcolor{myblue}{\\textbf{TRƯỜNG THPT ...}} & & \\textcolor{myblue}{\\textbf{ĐỀ KIỂM TRA ĐỊNH KỲ}} \\\\
+    \\textcolor{myblue}{\\textbf{TRƯỜNG THPT NGUYỄN HỮU CẢNH}} & & \\textcolor{myblue}{\\textbf{ĐỀ KIỂM TRA ĐỊNH KỲ}} \\\\
     \\textcolor{myblue}{\\textbf{TỔ TOÁN}} & & \\textcolor{myblue}{\\textbf{Bài thi: TOÁN}} \\\\
     \\cline{1-1} \\cline{3-3}
     \\textit{(Đề thi có \\pageref{LastPage} trang)} & & \\textit{Thời gian làm bài: 45 phút} \\\\
@@ -513,13 +535,131 @@ ${footerConfig}
 \\end{enumerate}
 
 `;
+            } else if (docType === 'quick_test') {
+                latexStr += `% ==========================================
+% PHẦN A: ĐỀ KIỂM TRA 15 PHÚT
+% ==========================================
+\\noindent
+\\begin{tabularx}{\\textwidth}{@{} c X c @{}}
+    \\textcolor{myblue}{\\textbf{TRƯỜNG THPT NGUYỄN HỮU CẢNH}} & & \\textcolor{myblue}{\\textbf{ĐỀ KIỂM TRA 15 PHÚT}} \\\\
+    \\textcolor{myblue}{\\textbf{TỔ TOÁN}} & & \\textcolor{myblue}{\\textbf{Môn: TOÁN}} \\\\
+    \\cline{1-1} \\cline{3-3}
+    \\textit{(Đề thi có \\pageref{LastPage} trang)} & & \\textit{Thời gian làm bài: 15 phút} \\\\
+\\end{tabularx}
+
+\\vspace{0.4cm}
+\\noindent\\textit{Họ và tên:} ........................................................... \\textit{Lớp:} ............... \\hfill \\textcolor{myred}{\\textbf{Mã đề: 103}}
+
+\\vspace{0.2cm}
+{\\color{myblue}\\hrule height 1pt}
+\\vspace{0.3cm}
+
+\\begin{enumerate}[label=\\textcolor{myblue}{\\textbf{Câu \\arabic*.}}, itemsep=0.3cm, parsep=0pt, leftmargin=*]
+    % [CHÈN CÁC CÂU HỎI VÀO ĐÂY]
+\\end{enumerate}
+
+`;
+            } else if (docType === 'self_study') {
+                latexStr += `% ==========================================
+% PHẦN A: PHIẾU TỰ HỌC
+% ==========================================
+\\begin{center}
+    \\textcolor{myblue}{\\textbf{\\Large TRƯỜNG THPT NGUYỄN HỮU CẢNH - TỔ TOÁN}} \\\\[0.2cm]
+    \\textcolor{myred}{\\textbf{\\LARGE PHIẾU HƯỚNG DẪN TỰ HỌC: ${topicUpper}}}
+\\end{center}
+
+\\vspace{0.2cm}
+\\noindent\\textbf{Họ và tên:} ........................................................... \\textbf{Lớp:} ....................... \\hfill \\textbf{Ngày hoàn thành:} ...............
+\\vspace{0.2cm}
+{\\color{myblue}\\hrule height 1pt}
+\\vspace{0.3cm}
+
+% --- 1. NHIỆM VỤ ĐỌC & TÌM HIỂU ---
+\\noindent \\textcolor{myblue}{\\textbf{\\large 1. NHIỆM VỤ TÌM HIỂU TRƯỚC BÀI}}
+\\begin{itemize}[itemsep=0.1cm]
+    \\item Đọc sách giáo khoa từ trang ... đến trang ...
+    \\item Xem video bài giảng (nếu có) tại link: .......................................
+\\end{itemize}
+
+\\vspace{0.3cm}
+% --- 2. CÂU HỎI ĐIỀN KHUYẾT (KIỂM TRA ĐỌC HIỂU) ---
+\\noindent \\textcolor{myblue}{\\textbf{\\large 2. TÓM TẮT KIẾN THỨC (ĐIỀN VÀO CHỖ TRỐNG)}}
+% [Chèn các câu hỏi điền khuyết lý thuyết cốt lõi]
+\\vspace{1cm}
+
+\\vspace{0.3cm}
+% --- 3. BÀI TẬP TỰ LUYỆN CƠ BẢN ---
+\\noindent \\textcolor{myblue}{\\textbf{\\large 3. BÀI TẬP TỰ LUYỆN ÁP DỤNG}}
+\\begin{enumerate}[label=\\textcolor{myred}{\\textbf{Bài \\arabic*.}}, itemsep=0.5cm, leftmargin=*]
+    % [Chèn các bài tập cơ bản để HS tự làm ở nhà]
+\\end{enumerate}
+
+\\vspace{0.5cm}
+% --- 4. GÓC THẮC MẮC ---
+\\noindent \\textcolor{myblue}{\\textbf{\\large 4. GÓC THẮC MẮC (GHI LẠI ĐỂ HỎI TRÊN LỚP)}}
+\\noindent \\dotfill \\\\
+\\noindent \\dotfill \\\\
+
+\\vspace{0.3cm}
+% --- 5. TỰ ĐÁNH GIÁ SỰ TỰ HỌC ---
+\\noindent \\textcolor{myblue}{\\textbf{\\large 5. TỰ ĐÁNH GIÁ MỨC ĐỘ TỰ HỌC}}
+\\begin{center}
+\\renewcommand{\\arraystretch}{1.5}
+\\begin{tabularx}{\\textwidth}{|X|c|c|c|}
+\\hline
+\\rowcolor{mygray} \\textbf{Tiêu chí} & \\multicolumn{3}{c|}{\\textbf{Đánh giá ($\\checkmark$)}}\\\\
+\\hline
+Hoàn thành nhiệm vụ đọc hiểu & $\\square$ Tốt & $\\square$ Một phần & $\\square$ Chưa làm\\\\
+\\hline
+Khả năng ghi nhớ công thức & $\\square$ Thuộc & $\\square$ Còn vấp & $\\square$ Quên\\\\
+\\hline
+Mức độ hiểu bài tập tự luyện & $\\square$ Hiểu rõ & $\\square$ Hơi rối & $\\square$ Không hiểu\\\\
+\\hline
+\\end{tabularx}
+\\end{center}
+
+`;
+            } else if (docType === 'review_sheet') {
+                latexStr += `% ==========================================
+% PHẦN A: PHIẾU TỔNG ÔN
+% ==========================================
+\\begin{center}
+    \\textcolor{myblue}{\\textbf{\\Large TRƯỜNG THPT NGUYỄN HỮU CẢNH - TỔ TOÁN}} \\\\[0.2cm]
+    \\textcolor{myred}{\\textbf{\\LARGE PHIẾU TỔNG ÔN \\& TÓM TẮT: ${topicUpper}}}
+\\end{center}
+
+\\vspace{0.2cm}
+\\noindent\\textbf{Họ và tên:} ........................................................... \\textbf{Lớp:} .......................
+\\vspace{0.2cm}
+{\\color{myblue}\\hrule height 1pt}
+\\vspace{0.3cm}
+
+% --- 1. SƠ ĐỒ / BẢNG TÓM TẮT LÝ THUYẾT ---
+\\noindent \\textcolor{myblue}{\\textbf{\\large 1. TÓM TẮT KIẾN THỨC CỐT LÕI}}
+\\begin{tcolorbox}[colback=myblue!5, colframe=myblue, title=\\textbf{Hệ thống công thức \\& Dấu hiệu}]
+    % [AI trình bày lý thuyết dưới dạng bảng biểu, gạch đầu dòng ngắn gọn, hoặc sơ đồ]
+\\end{tcolorbox}
+
+\\vspace{0.3cm}
+% --- 2. CÁC DẠNG BÀI TẬP ĐẶC TRƯNG ---
+\\noindent \\textcolor{myblue}{\\textbf{\\large 2. CÁC DẠNG TOÁN THƯỜNG GẶP}}
+% [Trình bày 2-3 dạng bài quan trọng, mỗi dạng có phương pháp giải ngắn và 1 ví dụ mẫu]
+
+\\vspace{0.3cm}
+% --- 3. BÀI TẬP TỰ RÈN LUYỆN TỔNG HỢP ---
+\\noindent \\textcolor{myblue}{\\textbf{\\large 3. BÀI TẬP TỰ KIỂM TRA}}
+\\begin{enumerate}[label=\\textcolor{myred}{\\textbf{Câu \\arabic*.}}, itemsep=0.3cm, leftmargin=*]
+    % [Chèn các câu hỏi trắc nghiệm hoặc bài tập ngắn quét mọi dạng]
+\\end{enumerate}
+
+`;
             } else {
                 // Header cho Phiếu học tập / Song song
                 latexStr += `% ==========================================
 % PHẦN A: PHIẾU HỌC TẬP
 % ==========================================
 \\begin{center}
-    \\textcolor{myblue}{\\textbf{\\Large LỚP TOÁN THẦY VŨ TIẾN LỰC - NHC}} \\\\[0.2cm]
+    \\textcolor{myblue}{\\textbf{\\Large TRƯỜNG THPT NGUYỄN HỮU CẢNH - TỔ TOÁN}} \\\\[0.2cm]
     \\textcolor{myred}{\\textbf{\\LARGE PHIẾU HỌC TẬP: ${topicUpper}}}
 \\end{center}
 
@@ -639,8 +779,8 @@ Hỏi khi chưa hiểu & $\\square$ Có & \\multicolumn{2}{c|}{$\\square$ Chưa}
                 }
             }
 
-            if (docType === 'exam_mixed') {
-                // === LỜI GIẢI & THANG ĐIỂM CHO ĐỀ TRÊN LỚP ===
+            if (docType === 'exam_mixed' || docType === 'quick_test') {
+                // === LỜI GIẢI & THANG ĐIỂM CHO ĐỀ TRÊN LỚP / 15 PHÚT ===
                 latexStr += `% ==========================================
 % PHẦN B: ĐÁP ÁN & HƯỚNG DẪN CHẤM
 % ==========================================
@@ -841,6 +981,19 @@ Hỏi khi chưa hiểu & $\\square$ Có & \\multicolumn{2}{c|}{$\\square$ Chưa}
                 promptStr += `- Đánh số cặp: Ví dụ 1 (Cột trái) - Bài tương tự 1 (Cột phải).\n`;
                 promptStr += `- Dưới mỗi cặp bài, BẮT BUỘC thêm dòng: "🔍 Nhận xét sau khi làm: \\dotfill".\n`;
                 promptStr += `- Để chia 2 cột an toàn trong LaTeX, BẮT BUỘC SỬ DỤNG cấu trúc minipage mẫu mà tôi đã comment sẵn trong Template bên dưới.\n\n`;
+            } else if (docType === 'quick_test') {
+                promptStr += `Hãy tạo một ĐỀ KIỂM TRA 15 PHÚT môn Toán bằng mã LaTeX hoàn chỉnh. Đề bài cần ngắn gọn, đánh giá nhanh gọn trọng tâm kiến thức.\n\n`;
+            } else if (docType === 'self_study') {
+                promptStr += `Hãy tạo một PHIẾU TỰ HỌC (chuẩn bị bài ở nhà hoặc ôn lại) môn Toán bằng mã LaTeX hoàn chỉnh. Phiếu này dùng để ĐÁNH GIÁ SỰ TỰ HỌC của học sinh.\n\n`;
+                promptStr += `YÊU CẦU ĐẶC BIỆT DÀNH CHO PHIẾU TỰ HỌC:\n`;
+                promptStr += `- Thiết kế phần lý thuyết dưới dạng "Điền khuyết" để học sinh đọc sách giáo khoa và tự điền vào.\n`;
+                promptStr += `- Bài tập tự luyện phải từ mức độ nhận biết đến thông hiểu cơ bản, giúp tự đánh giá kiến thức.\n`;
+                promptStr += `- Bắt buộc giữ nguyên bảng Tự đánh giá mức độ tự học ở cuối phiếu (xem Template).\n\n`;
+            } else if (docType === 'review_sheet') {
+                promptStr += `Hãy tạo một PHIẾU TỔNG ÔN TÓM TẮT KIẾN THỨC môn Toán bằng mã LaTeX hoàn chỉnh. (Thực hiện đúng yêu cầu: Tóm tắt các kiến thức súc tích nhất để học sinh ôn thi).\n\n`;
+                promptStr += `YÊU CẦU ĐẶC BIỆT DÀNH CHO PHIẾU TỔNG ÔN:\n`;
+                promptStr += `- Tóm tắt lý thuyết, công thức dưới dạng bảng biểu hoặc gạch đầu dòng cực kỳ ngắn gọn, dễ nhớ.\n`;
+                promptStr += `- Phân loại rõ các dạng toán thường gặp, nêu nhanh phương pháp giải và kèm 1 ví dụ minh họa mẫu.\n\n`;
             } else {
                 promptStr += `Hãy tạo một ĐỀ KIỂM TRA Toán bằng mã LaTeX hoàn chỉnh. Mã LaTeX này phải có thể biên dịch trực tiếp trên Overleaf mà không bị lỗi.\n\n`;
                 promptStr += `YÊU CẦU CẤU TRÚC ĐỀ THI (Chuẩn 2025 BGD):\n`;
@@ -853,7 +1006,7 @@ Hỏi khi chưa hiểu & $\\square$ Có & \\multicolumn{2}{c|}{$\\square$ Chưa}
             promptStr += `\nKỊCH BẢN NỘI DUNG YÊU CẦU:\n${structureStr}\n`;
             
             if (scriptMode === 'detailed') {
-                if (docType === 'worksheet' || docType === 'parallel_worksheet' || docType === 'presentation') {
+                if (docType === 'worksheet' || docType === 'parallel_worksheet' || docType === 'presentation' || docType === 'self_study' || docType === 'review_sheet') {
                     promptStr += `(Dựa vào danh sách trên, hãy thiết kế nội dung điền vào Form).\n\n`;
                 } else if (docType === 'exam_mixed') {
                     promptStr += `(Hãy tự động phân bổ các câu hỏi vào PHẦN I (Trắc nghiệm) và PHẦN II (Tự luận) tương ứng với loại câu hỏi trong Template).\n\n`;
@@ -890,7 +1043,7 @@ Hỏi khi chưa hiểu & $\\square$ Có & \\multicolumn{2}{c|}{$\\square$ Chưa}
             }
 
             if(docType !== 'presentation' && docType !== 'convert_to_slide') {
-                if (docType === 'exam_mixed') {
+                if (docType === 'exam_mixed' || docType === 'quick_test') {
                     promptStr += `${ruleCounter}. HƯỚNG DẪN CHẤM: Tất cả bảng đáp án trắc nghiệm và thang điểm chi tiết cho phần tự luận đều PHẢI nằm gọn trong khối \\ifhienthiloigiai ở cuối file.\n\n`;
                 } else {
                     promptStr += `${ruleCounter}. LỜI GIẢI: Tất cả đáp án, phân tích và hướng dẫn giải (của phần bài tự làm) đều PHẢI nằm gọn trong khối \\ifhienthiloigiai ở cuối file.\n\n`;
